@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Callback</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-card">
+            <h1>Processing Authentication</h1>
+            <p>Please wait while we complete your login...</p>
+            <div class="spinner"></div>
+            <div id="error-message" class="error hidden"></div>
+        </div>
+    </div>
+
+    <script>
+        // Handle OAuth callback
+        const params = new URLSearchParams(window.location.search);
+        const code = params.get('code');
+        const error = params.get('error');
+
+        if (error) {
+            document.getElementById('error-message').textContent = 'Authentication failed: ' + decodeURIComponent(error);
+            document.getElementById('error-message').classList.remove('hidden');
+            document.querySelector('.spinner').style.display = 'none';
+        } else if (code) {
+            fetch(`/callback?code=${code}`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Authentication failed');
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.token) {
+                        localStorage.setItem('auth_token', data.token);
+                        window.location.href = '/';
+                    } else {
+                        throw new Error('No token received');
+                    }
+                })
+                .catch(err => {
+                    document.getElementById('error-message').textContent = 'Authentication failed: ' + err.message;
+                    document.getElementById('error-message').classList.remove('hidden');
+                    document.querySelector('.spinner').style.display = 'none';
+                });
+        } else {
+            document.getElementById('error-message').textContent = 'No authorization code received';
+            document.getElementById('error-message').classList.remove('hidden');
+            document.querySelector('.spinner').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

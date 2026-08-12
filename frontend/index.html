@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Vacation Application</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Login View -->
+        <div id="login-view" class="view">
+            <div class="login-card">
+                <h1>HR Vacation Portal</h1>
+                <p>Sign in to manage your vacation requests</p>
+                <form id="login-form" class="login-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" required autocomplete="username">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+                <p style="margin-top: 1rem; font-size: 0.85rem; color: #666;">
+                    Test users: admin, jdoe, janedoe, bobsmith
+                </p>
+            </div>
+        </div>
+
+        <!-- Dashboard View -->
+        <div id="dashboard-view" class="view hidden">
+            <header>
+                <h1>Welcome, <span id="user-name"></span></h1>
+                <nav>
+                    <button class="btn btn-tab active" data-tab="my-requests">My Requests</button>
+                    <button class="btn btn-tab" data-tab="new-request">New Request</button>
+                    <button class="btn btn-tab" data-tab="balance">My Balance</button>
+                    <button class="btn btn-tab manager-only hidden" data-tab="pending-approvals">Pending Approvals</button>
+                </nav>
+                <button id="logout-btn" class="btn btn-secondary">Logout</button>
+            </header>
+
+            <!-- My Requests Tab -->
+            <div id="my-requests" class="tab-content active">
+                <h2>My Vacation Requests</h2>
+                <div id="requests-list" class="card-list"></div>
+            </div>
+
+            <!-- New Request Tab -->
+            <div id="new-request" class="tab-content hidden">
+                <h2>Request Vacation</h2>
+                <form id="vacation-form" class="form-card">
+                    <div class="form-group">
+                        <label for="start-date">Start Date</label>
+                        <input type="date" id="start-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="end-date">End Date</label>
+                        <input type="date" id="end-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="request-type">Request Type</label>
+                        <select id="request-type">
+                            <option value="FULL_DAY">Full Day(s)</option>
+                            <option value="HALF_DAY_MORNING">Half Day - Morning</option>
+                            <option value="HALF_DAY_AFTERNOON">Half Day - Afternoon</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="reason">Reason (Optional)</label>
+                        <textarea id="reason" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Hours: <span id="hours-calculation">0</span></label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Request</button>
+                </form>
+            </div>
+
+            <!-- Balance Tab -->
+            <div id="balance" class="tab-content hidden">
+                <h2>My Vacation Balance</h2>
+                <div id="balance-info" class="info-card"></div>
+            </div>
+
+            <!-- Pending Approvals Tab (Manager Only) -->
+            <div id="pending-approvals" class="tab-content hidden">
+                <h2>Pending Approvals</h2>
+                <div id="pending-list" class="card-list"></div>
+            </div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div id="toast-container" class="toast-container"></div>
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>
