@@ -8,7 +8,14 @@
 
 ## Priority 2: Core Backend API
 - [x] Task 5: Set up Flask application with routing structure
-- [x] Task 6: Implement OAuth/OIDC authentication framework (token verifier, auth service)
+- [ ] Task 6: Implement OAuth/OIDC authentication framework (token verifier, auth service)
+  - [x] JWT token creation & verification (`TokenVerifier`)
+  - [x] Dev login endpoint (`/api/auth/login` — username-only POST)
+  - [x] `@token_required` decorator on protected routes
+  - [x] `@role_required` decorator for role-based access control
+  - [ ] OIDC authorization flow (`/login` → provider redirect — unreachable in dev)
+  - [ ] OIDC callback handler (`/callback` — dead code, no OIDC provider configured)
+  - [ ] Token exchange with OIDC provider (dead code)
 - [x] Task 7: Implement role-based access control (EMPLOYEE, MANAGER, ADMIN)
 - [x] Task 8: Create vacation request CRUD endpoints
 
